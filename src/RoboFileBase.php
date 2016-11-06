@@ -103,7 +103,15 @@ abstract class RoboFileBase extends Tasks {
    *   A robo result object.
    */
   public function phpcs(array $files) {
-    $files = $files ?: static::PHPCS_FILES;
+    $files = $files ? array_filter($files, function ($file) {
+      foreach (static::PHPCS_FILES as $pattern) {
+        if (strpos($file, $pattern) === 0) {
+          return TRUE;
+        }
+      }
+      return FALSE;
+    }) : static::PHPCS_FILES;
+
     return $this->taskPhpcsLintFiles()
       ->setStandard(static::PHPCS_DRUPAL_SNIFFER)
       ->setColors(TRUE)
