@@ -1,0 +1,25 @@
+{
+    "name": "claudiu-cristea/robo-drupal",
+    "description": "Robo task wrapper for Drupal projects",
+    "type": "library",
+    "license": "GPL-2.0+",
+    "authors": [
+        {
+            "name": "Claudiu Cristea",
+            "email": "clau.cristea@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "require-dev": {
+        "boedah/robo-drush": "^2.2",
+        "cheppers/git-hooks": "dev-master",
+        "cheppers/robo-phpcs": "dev-master",
+        "drupal/coder": "~8.2.9"
+    },
+    "autoload": {
+        "psr-4": {
+            "Drupal\\Robo\\": "src/"
+        }
+    }
+}
