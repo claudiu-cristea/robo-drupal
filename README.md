@@ -13,7 +13,7 @@ $ composer require --dev claudiu-cristea/robo-drupal-tasks
 or add this line to your project `composer.json`:
 
 ```json
-    "require-dev": {
+    "require": {
         "claudiu-cristea/robo-drupal-tasks": "dev-master"
     },
 ```
