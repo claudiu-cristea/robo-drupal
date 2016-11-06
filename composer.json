@@ -12,6 +12,7 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require": {
+        "php": ">=5.6.0",
         "boedah/robo-drush": "^2.2",
         "cheppers/git-hooks": "dev-master",
         "cheppers/robo-phpcs": "dev-master",
