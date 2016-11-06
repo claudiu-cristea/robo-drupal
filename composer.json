@@ -1,5 +1,5 @@
 {
-    "name": "claudiu-cristea/robo-drupal",
+    "name": "claudiu-cristea/robo-drupal-tasks",
     "description": "Robo task wrapper for Drupal projects",
     "type": "library",
     "license": "GPL-2.0+",

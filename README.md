@@ -1,4 +1,4 @@
-# Robo Drupal
+# Robo Drupal Tasks
 
 Provides useful Robo commands for Drupal projects.
 
@@ -7,13 +7,13 @@ Provides useful Robo commands for Drupal projects.
 Run:
 
 ```bash
-$ composer require --dev claudiu-cristea/robo-drupal
+$ composer require --dev claudiu-cristea/robo-drupal-tasks
 ```
 
 or add this line to your project `composer.json`:
 
 ```json
     "require-dev": {
-        "claudiu-cristea/robo-drupal": "dev-master"
+        "claudiu-cristea/robo-drupal-tasks": "dev-master"
     },
 ```
