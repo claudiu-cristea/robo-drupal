@@ -14,8 +14,6 @@ or add this line to your project `composer.json`:
 
 ```json
     "require-dev": {
-        ... ,
-        "claudiu-cristea/robo-drupal": "dev-master",
-        ... ,
+        "claudiu-cristea/robo-drupal": "dev-master"
     },
 ```
