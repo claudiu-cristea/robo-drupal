@@ -16,11 +16,22 @@
         "boedah/robo-drush": "^2.2",
         "cheppers/git-hooks": "dev-master",
         "cheppers/robo-phpcs": "dev-master",
-        "drupal/coder": "~8.2.9"
+        "drupal/coder": "~8.2.9",
+        "nordcode/robo-parameters": "dev-boilerplate"
     },
     "autoload": {
         "psr-4": {
             "Drupal\\Robo\\": "src/"
         }
-    }
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://packages.drupal.org/8"
+        },
+        {
+            "type": "git",
+            "url": "https://github.com/claudiu-cristea/robo-parameters.git"
+        }
+    ]
 }
