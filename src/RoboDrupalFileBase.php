@@ -5,7 +5,9 @@ namespace Drupal\Robo;
 use Cheppers\Robo\Phpcs\LoadPhpcsTasks;
 use Cheppers\LintReport\Reporter\BaseReporter;
 use League\Container\ContainerInterface;
+use NordCode\RoboParameters\FileConfigurable;
 use Robo\Tasks;
+use Symfony\Component\Filesystem\Exception\FileNotFoundException;
 
 /**
  * Provides a base class for wrapping useful Drupal tasks.
@@ -14,7 +16,7 @@ use Robo\Tasks;
  * with the same name, extending this abstract class, and customize it for your
  * needs.
  * @code
- * class RoboFile extends RoboFileBase {
+ * class RoboFile extends RoboDrupalFileBase {
  *
  *   const PHPCS_IGNORES = [
  *     ...
@@ -23,61 +25,43 @@ use Robo\Tasks;
  *     ...
  *   ];
  *
+ *   // Use a different configuration file name and location.
+ *   const CONFIG_FILE_LOCAL = 'config/site_config.xml';
+ *
  *   ...
  * }
  * @endcode
  */
-abstract class RoboFileBase extends Tasks {
+abstract class RoboDrupalFileBase extends Tasks implements RoboDrupalFileInterface {
 
   use LoadPhpcsTasks;
+  use FileConfigurable;
 
   /**
-   * The PHPCS Drupal sniffer path.
-   *
-   * @var string
+   * Constructs a RoboFile for Drupal tasks.
    */
-  const PHPCS_DRUPAL_SNIFFER = './vendor/drupal/coder/coder_sniffer/Drupal';
+  public function __construct() {
+    $has_dist_config = static::CONFIG_FILE_DIST !== NULL;
+    $has_local_config = static::CONFIG_FILE_LOCAL !== NULL;
+    if ($has_dist_config && !file_exists(static::CONFIG_FILE_DIST)) {
+      throw new FileNotFoundException('A file named ' . static::CONFIG_FILE_DIST . ' should exist.');
+    }
+    if ($has_local_config && !file_exists(static::CONFIG_FILE_LOCAL)) {
+      throw new FileNotFoundException('A file named ' . static::CONFIG_FILE_LOCAL . ' should be created.');
+    }
 
-  /**
-   * A list of files or directories to be scanned by PHPCS.
-   *
-   * @var string[]
-   */
-  const PHPCS_FILES = [
-    'web/modules/custom/',
-    'web/profiles/custom/',
-    'web/themes/custom/',
-  ];
-
-  /**
-   * A list of file extensions to be scanned by PHPCS.
-   *
-   * @var string[]
-   */
-  const PHPCS_EXTENSIONS = [
-    'php',
-    'inc',
-    'module',
-    'install',
-    'info',
-    'test',
-    'profile',
-    'theme',
-    'css',
-    'js',
-  ];
-
-  /**
-   * A list of ignore patterns to not be scanned by PHPCS.
-   *
-   * @var string[]
-   */
-  const PHPCS_IGNORES = [
-    '*.gif',
-    '*.png',
-    '*.min.css',
-    '*.min.css',
-  ];
+    if ($has_dist_config && $has_local_config) {
+      $this
+        ->useBoilerplate(static::CONFIG_FILE_DIST)
+        ->loadConfiguration(static::CONFIG_FILE_LOCAL);
+    }
+    elseif ($has_dist_config && !$has_local_config) {
+      $this->loadConfiguration(static::CONFIG_FILE_DIST);
+    }
+    elseif (!$has_dist_config && $has_local_config) {
+      $this->loadConfiguration(static::CONFIG_FILE_LOCAL);
+    }
+  }
 
   /**
    * {@inheritdoc}
